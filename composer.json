@@ -1,0 +1,26 @@
+{
+  "name": "reinfi/bamboo-spec",
+  "type": "library",
+  "description": "A library to maintain bamboo spec definition.",
+  "keywords": [
+    "bamboo",
+    "spec"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Reinfi"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Reinfi\\BambooSpec\\": [
+        "src/",
+        "test/"
+      ]
+    }
+  }
+}

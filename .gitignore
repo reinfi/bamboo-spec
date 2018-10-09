@@ -1,0 +1,10 @@
+# Composer files
+composer.phar
+vendor/
+composer.lock
+
+# PHP CS Fixer
+.php_cs.cache
+
+# IDE
+.idea/
