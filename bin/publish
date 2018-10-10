@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+use Doctrine\Common\Annotations\AnnotationRegistry;
+
+$composerAutoload = getcwd() . '/vendor/autoload.php';
+
+if (!file_exists($composerAutoload)) {
+    echo 'Couldn\'t find composer, make sure to run script in project root!' . PHP_EOL;
+    exit(1);
+}
+
+require $composerAutoload;
+
+AnnotationRegistry::registerLoader('class_exists');
+
+array_shift($argv);
+
+$application = new \Reinfi\BambooSpec\Application\Application();
+$exitCode = $application->run();
+exit($exitCode);

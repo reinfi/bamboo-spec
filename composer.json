@@ -13,13 +13,18 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "symfony/yaml": "^4.1",
+    "symfony/console": "^4.1",
+    "guzzlehttp/guzzle": "^6.3",
+    "psr/log": "^1.0",
+    "jms/serializer": "^1.13"
   },
   "autoload": {
     "psr-4": {
       "Reinfi\\BambooSpec\\": [
         "src/",
-        "test/"
+        "tests/"
       ]
     }
   }
