@@ -5,7 +5,7 @@ namespace Reinfi\BambooSpec\Entity\Task;
 /**
  * @package Reinfi\BambooSpec\Entity\Task
  */
-interface TaskInterfacee
+interface TaskInterface
 {
     /**
      * Matching class of bamboo java spec.

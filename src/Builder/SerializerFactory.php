@@ -9,6 +9,7 @@ use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Reinfi\BambooSpec\Builder\Handler\ArrayObjectHandler;
+use Reinfi\BambooSpec\Builder\Handler\MultiLineHandler;
 use Reinfi\BambooSpec\Builder\Handler\SpecEntityHandler;
 use Reinfi\BambooSpec\Builder\Handler\TaskInterfaceHandler;
 use Reinfi\BambooSpec\Builder\Listener\ArrayObjectSubscriber;
@@ -40,6 +41,7 @@ class SerializerFactory
         $serializerBuilder->configureHandlers(
             function (HandlerRegistry $handlerRegistry) {
                 $handlerRegistry->registerSubscribingHandler(new ArrayObjectHandler());
+                $handlerRegistry->registerSubscribingHandler(new MultiLineHandler());
                 $handlerRegistry->registerSubscribingHandler(new SpecEntityHandler());
                 $handlerRegistry->registerSubscribingHandler(new TaskInterfaceHandler());
             }

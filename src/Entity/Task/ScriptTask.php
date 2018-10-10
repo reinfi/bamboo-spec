@@ -2,6 +2,8 @@
 
 namespace Reinfi\BambooSpec\Entity\Task;
 
+use Reinfi\BambooSpec\Entity\Types\MultiLine;
+
 /**
  * @package Reinfi\BambooSpec\Entity\Task
  */
@@ -20,7 +22,7 @@ class ScriptTask extends AbstractTask
     /** @var string */
     private $location = self::LOCATION_INLINE;
 
-    /** @var string */
+    /** @var MultiLine */
     private $body;
 
     /** @var string */
@@ -90,7 +92,7 @@ class ScriptTask extends AbstractTask
     public function withInlineBody(string $body): self
     {
         $this->location = self::LOCATION_INLINE;
-        $this->body = $body;
+        $this->body = new MultiLine($body);
         $this->path = null;
 
         return $this;

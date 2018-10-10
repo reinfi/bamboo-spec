@@ -47,20 +47,5 @@ class TaskInterfaceHandler implements SubscribingHandlerInterface
         );
 
         $context->startVisiting($entity);
-
-        return;
-
-        /** @var $metadata ClassMetadata */
-        $metadata = $context->getMetadataFactory()->getMetadataForClass(get_class($entity));
-
-        $visitor->startVisitingObject($metadata, $entity, $type, $context);
-        foreach ($metadata->propertyMetadata as $propertyMetadata) {
-
-            $context->pushPropertyMetadata($propertyMetadata);
-            $visitor->visitProperty($propertyMetadata, $entity, $context);
-            $context->popPropertyMetadata();
-        }
-
-        return $visitor->endVisitingObject($metadata, $entity, $type, $context);
     }
 }
