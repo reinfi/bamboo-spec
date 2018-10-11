@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
+use Reinfi\BambooSpec\Entity\Traits\WithOid;
+
 /**
  * @package Reinfi\BambooSpec\Entity
  */
 class Plan implements SpecEntityInterface
 {
+    use WithOid;
+
     protected const JAVA_CLASS_NAME = 'com.atlassian.bamboo.specs.api.model.plan.PlanProperties';
 
     /** @var BambooKey */
     protected $key;
-
-    /** @var BambooOid */
-    protected $oid;
 
     /** @var string */
     protected $name;
@@ -31,7 +33,14 @@ class Plan implements SpecEntityInterface
 
     /*
     protected List<StageProperties> stages = new ArrayList<>();
-    protected List<PlanRepositoryLinkProperties> repositories = new ArrayList<>();
+    */
+
+    /**
+     * @var RepositoryInterface[]|\ArrayObject
+     */
+    protected $repositories;
+
+    /*
     protected List<TriggerProperties> triggers = new ArrayList<>();
     protected List<VariableProperties> variables = new ArrayList<>();
     */
@@ -59,6 +68,8 @@ class Plan implements SpecEntityInterface
         $this->key = $key;
         $this->name = $name;
         $this->project = $project;
+
+        $this->repositories = new \ArrayObject();
     }
 
     /**
@@ -77,26 +88,6 @@ class Plan implements SpecEntityInterface
     public function setKey(BambooKey $key)
     {
         $this->key = $key;
-
-        return $this;
-    }
-
-    /**
-     * @return BambooOid
-     */
-    public function getOid(): BambooOid
-    {
-        return $this->oid;
-    }
-
-    /**
-     * @param BambooOid $oid
-     *
-     * @return Plan
-     */
-    public function setOid(BambooOid $oid)
-    {
-        $this->oid = $oid;
 
         return $this;
     }
@@ -164,6 +155,13 @@ class Plan implements SpecEntityInterface
     public function withStages(Stage ...$stages): self
     {
         $this->stages = $stages;
+
+        return $this;
+    }
+
+    public function withRepository(RepositoryInterface ...$repositories): self
+    {
+        $this->repositories->exchangeArray($repositories);
 
         return $this;
     }

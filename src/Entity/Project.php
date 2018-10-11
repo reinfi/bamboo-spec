@@ -2,20 +2,19 @@
 
 namespace Reinfi\BambooSpec\Entity;
 
+use Reinfi\BambooSpec\Entity\Traits\WithOid;
+
 /**
  * @package Reinfi\BambooSpec\Entity
  */
 class Project
 {
+    use WithOid;
+
     /**
      * @var BambooKey
      */
     protected $key;
-
-    /**
-     * @var BambooOid
-     */
-    protected $oid;
 
     /**
      * @var string
@@ -53,26 +52,6 @@ class Project
     public function setKey(BambooKey $key)
     {
         $this->key = $key;
-
-        return $this;
-    }
-
-    /**
-     * @return BambooOid
-     */
-    public function getOid(): BambooOid
-    {
-        return $this->oid;
-    }
-
-    /**
-     * @param BambooOid $oid
-     *
-     * @return Project
-     */
-    public function setOid(BambooOid $oid)
-    {
-        $this->oid = $oid;
 
         return $this;
     }

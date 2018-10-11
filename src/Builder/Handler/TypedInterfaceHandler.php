@@ -2,18 +2,17 @@
 
 namespace Reinfi\BambooSpec\Builder\Handler;
 
-use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
-use JMS\Serializer\Metadata\ClassMetadata;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\YamlSerializationVisitor;
-use Reinfi\BambooSpec\Entity\Task\TaskInterface;
+use Reinfi\BambooSpec\Builder\Interfaces\TypedInterface;
+use Reinfi\BambooSpec\Builder\Interfaces\TypedKeyInterface;
 
 /**
  * @package Reinfi\BambooSpec\Builder\Handler
  */
-class TaskInterfaceHandler implements SubscribingHandlerInterface
+class TypedInterfaceHandler implements SubscribingHandlerInterface
 {
     public static function getSubscribingMethods()
     {
@@ -21,19 +20,24 @@ class TaskInterfaceHandler implements SubscribingHandlerInterface
             [
                 'direction' => GraphNavigator::DIRECTION_SERIALIZATION,
                 'format'    => 'yml',
-                'type'      => TaskInterface::class,
-                'method'    => 'serializeTask',
+                'type'      => TypedInterface::class,
+                'method'    => 'serialize',
             ],
         ];
     }
 
-    public function serializeTask(
+    public function serialize(
         YamlSerializationVisitor $visitor,
-        TaskInterface $entity,
+        TypedInterface $entity,
         array $type,
         SerializationContext $context
     ) {
         $visitor->writer->rtrim(false);
+
+        if ($entity instanceof TypedKeyInterface) {
+            $visitor->writer->write(' ' . $entity->getTypeKey() . ':');
+        }
+
         $visitor->writer->writeln(' !!' . $entity->getJavaClass());
 
         $context->stopVisiting($entity);
@@ -41,7 +45,7 @@ class TaskInterfaceHandler implements SubscribingHandlerInterface
         $visitor->getNavigator()->accept(
             $entity,
             [
-                'name' => get_class($entity)
+                'name' => get_class($entity),
             ],
             $context
         );
