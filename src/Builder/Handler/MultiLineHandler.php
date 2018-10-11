@@ -27,9 +27,7 @@ class MultiLineHandler implements SubscribingHandlerInterface
 
     public function serializeMultiLine(
         YamlSerializationVisitor $visitor,
-        MultiLine $multiLine,
-        array $type,
-        SerializationContext $context
+        MultiLine $multiLine
     ) {
         $value = $multiLine->getContent();
 

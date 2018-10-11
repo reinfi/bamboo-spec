@@ -16,8 +16,11 @@ class Application extends \Symfony\Component\Console\Application
 
     protected function getDefaultCommands(): array
     {
-        return array_merge(parent::getDefaultCommands(), [
-            new PublishCommand(),
-        ]);
+        return array_merge(
+            parent::getDefaultCommands(),
+            [
+                new PublishCommand(),
+            ]
+        );
     }
 }
