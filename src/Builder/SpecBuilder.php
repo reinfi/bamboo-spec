@@ -2,7 +2,7 @@
 
 namespace Reinfi\BambooSpec\Builder;
 
-use Reinfi\BambooSpec\Entity\SpecEntityInterface;
+use Reinfi\BambooSpec\Entity\PublishableEntityInterface;
 use Symfony\Component\Yaml\Dumper;
 
 /**
@@ -33,7 +33,7 @@ class SpecBuilder
             = $serializerFactory ?: new SerializerFactory();
     }
 
-    public function build(SpecEntityInterface $entity): string
+    public function build(PublishableEntityInterface $entity): string
     {
         $specEntity = new SpecEntity($entity);
 

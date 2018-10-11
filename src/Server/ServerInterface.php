@@ -2,12 +2,12 @@
 
 namespace Reinfi\BambooSpec\Server;
 
-use Reinfi\BambooSpec\Entity\SpecEntityInterface;
+use Reinfi\BambooSpec\Entity\PublishableEntityInterface;
 
 /**
  * @package Reinfi\BambooSpec\Server
  */
 interface ServerInterface
 {
-    public function publish(SpecEntityInterface $entity): void;
+    public function publish(PublishableEntityInterface $entity): void;
 }

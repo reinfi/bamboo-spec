@@ -10,7 +10,7 @@ use Reinfi\BambooSpec\Entity\Traits\WithOid;
 /**
  * @package Reinfi\BambooSpec\Entity
  */
-class Plan implements SpecEntityInterface
+class Plan implements PublishableEntityInterface
 {
     use WithOid;
 
@@ -211,8 +211,13 @@ class Plan implements SpecEntityInterface
         return self::JAVA_CLASS_NAME;
     }
 
-    public function getHumanReadableId(): string
+    public function __toString(): string
     {
-        return sprintf("%s %s-%s", 'Plan', $this->project->getKey()->getKey(), $this->key->getKey());
+        return sprintf(
+            "%s %s-%s",
+            'Plan',
+            $this->project->getKey()->getKey(),
+            $this->key->getKey()
+        );
     }
 }

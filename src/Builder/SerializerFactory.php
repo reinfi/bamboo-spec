@@ -11,9 +11,7 @@ use JMS\Serializer\SerializerInterface;
 use Reinfi\BambooSpec\Builder\Handler\ArrayObjectHandler;
 use Reinfi\BambooSpec\Builder\Handler\DurationHandler;
 use Reinfi\BambooSpec\Builder\Handler\MultiLineHandler;
-use Reinfi\BambooSpec\Builder\Handler\SpecEntityHandler;
 use Reinfi\BambooSpec\Builder\Handler\TypedInterfaceHandler;
-use Reinfi\BambooSpec\Builder\Listener\ArrayObjectSubscriber;
 use Reinfi\BambooSpec\Builder\Listener\TypedInterfaceSubscriber;
 
 /**
@@ -33,22 +31,40 @@ class SerializerFactory
             )
             ->addDefaultSerializationVisitors();
 
+        $this->registerListener($serializerBuilder);
+        $this->registerHandler($serializerBuilder);
+
+        return $serializerBuilder->build();
+    }
+
+    protected function registerHandler(
+        SerializerBuilder $serializerBuilder
+    ): void {
+        $serializerBuilder->configureHandlers(
+            function (HandlerRegistry $handlerRegistry) {
+                $handlerRegistry->registerSubscribingHandler(
+                    new ArrayObjectHandler()
+                );
+                $handlerRegistry->registerSubscribingHandler(
+                    new DurationHandler()
+                );
+                $handlerRegistry->registerSubscribingHandler(
+                    new MultiLineHandler()
+                );
+                $handlerRegistry->registerSubscribingHandler(
+                    new TypedInterfaceHandler()
+                );
+            }
+        );
+    }
+
+    protected function registerListener(
+        SerializerBuilder $serializerBuilder
+    ): void {
         $serializerBuilder->configureListeners(
             function (EventDispatcherInterface $dispatcher) {
                 $dispatcher->addSubscriber(new TypedInterfaceSubscriber());
             }
         );
-
-        $serializerBuilder->configureHandlers(
-            function (HandlerRegistry $handlerRegistry) {
-                $handlerRegistry->registerSubscribingHandler(new ArrayObjectHandler());
-                $handlerRegistry->registerSubscribingHandler(new DurationHandler());
-                $handlerRegistry->registerSubscribingHandler(new MultiLineHandler());
-                $handlerRegistry->registerSubscribingHandler(new SpecEntityHandler());
-                $handlerRegistry->registerSubscribingHandler(new TypedInterfaceHandler());
-            }
-        );
-
-        return $serializerBuilder->build();
     }
 }

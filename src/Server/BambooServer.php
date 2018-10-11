@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Reinfi\BambooSpec\Builder\SpecBuilder;
 use Reinfi\BambooSpec\Entity\Plan;
-use Reinfi\BambooSpec\Entity\SpecEntityInterface;
+use Reinfi\BambooSpec\Entity\PublishableEntityInterface;
 
 /**
  * @package Reinfi\BambooSpec\Server
@@ -43,14 +43,14 @@ class BambooServer implements ServerInterface
         $this->specBuilder = $specBuilder ?: new SpecBuilder();
     }
 
-    public function publish(SpecEntityInterface $entity): void
+    public function publish(PublishableEntityInterface $entity): void
     {
         $specData = $this->specBuilder->build($entity);
 
         $this->logger->info(
             sprintf(
                 'Updating %s',
-                $entity->getHumanReadableId()
+                $entity->__toString()
             )
         );
 
@@ -67,7 +67,7 @@ class BambooServer implements ServerInterface
             $this->logger->info(
                 sprintf(
                     'Successful update of %s, visit %s',
-                    $entity->getHumanReadableId(),
+                    (string) $entity,
                     json_decode($response->getBody()->getContents())
                 )
             );
@@ -80,7 +80,7 @@ class BambooServer implements ServerInterface
         }
     }
 
-    private function getApiUrl(SpecEntityInterface $entity): string
+    private function getApiUrl(PublishableEntityInterface $entity): string
     {
         if ($entity instanceof Plan) {
             return "rest/api/latest/import/plan";
