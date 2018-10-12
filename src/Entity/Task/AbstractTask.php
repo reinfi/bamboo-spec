@@ -14,14 +14,6 @@ abstract class AbstractTask implements TaskInterface
     protected $description = "";
 
     /**
-     * @return bool
-     */
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
-    }
-
-    /**
      * @param bool $enabled
      *
      * @return AbstractTask
@@ -31,14 +23,6 @@ abstract class AbstractTask implements TaskInterface
         $this->enabled = $enabled;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
     }
 
     /**

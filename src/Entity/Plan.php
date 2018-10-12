@@ -31,10 +31,6 @@ class Plan implements PublishableEntityInterface
     /** @var iterable */
     protected $stages;
 
-    /*
-    protected List<StageProperties> stages = new ArrayList<>();
-    */
-
     /**
      * @var RepositoryInterface[]|\ArrayObject
      */
