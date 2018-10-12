@@ -9,7 +9,7 @@ use Reinfi\BambooSpec\Entity\BambooOid;
  */
 trait WithOid
 {
-    /** @var BambooOid */
+    /** @var BambooOid|null */
     protected $oid;
 
     /**
