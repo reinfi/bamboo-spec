@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Credentials;
 
 use Reinfi\BambooSpec\Config\Config;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Builder\Handler;
 
 use JMS\Serializer\Context;

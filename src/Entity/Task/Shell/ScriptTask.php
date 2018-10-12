@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;

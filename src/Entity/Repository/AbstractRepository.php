@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Entity\Repository;
 
 use Reinfi\BambooSpec\Entity\Traits\WithOid;

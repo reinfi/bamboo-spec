@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Builder\Listener;
 
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\PreSerializeEvent;
 use Reinfi\BambooSpec\Builder\Interfaces\TypedInterface;
-use Reinfi\BambooSpec\Entity\Task\AnyTask;
 
 /**
  * @package Reinfi\BambooSpec\Builder\Listener

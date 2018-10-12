@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Reinfi\BambooSpec\Entity\Artifact;
 
 use Reinfi\BambooSpec\Entity\Identifier\Plan\PlanIdentifier;
