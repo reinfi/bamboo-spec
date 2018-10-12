@@ -35,8 +35,6 @@ class Job
     protected $artifacts;
 
     /*
-    protected List<TaskProperties> tasks = new ArrayList<>();
-    protected List<TaskProperties> finalTasks = new ArrayList<>();
     protected List<RequirementProperties> requirements = new ArrayList<>();
     protected List<ArtifactSubscriptionProperties> subscriptions = new ArrayList<>();
     protected Map<String, PluginConfigurationProperties> pluginConfigurations = new LinkedHashMap<>();
