@@ -2,6 +2,7 @@
 
 namespace Reinfi\BambooSpec\Entity;
 
+use Reinfi\BambooSpec\Entity\Artifact\Artifact;
 use Reinfi\BambooSpec\Entity\Task\TaskInterface;
 
 /**
@@ -30,8 +31,10 @@ class Job
     /** @var \ArrayObject */
     protected $finalTasks;
 
+    /** @var \ArrayObject */
+    protected $artifacts;
+
     /*
-    protected List<ArtifactProperties> artifacts = new ArrayList<>();
     protected List<TaskProperties> tasks = new ArrayList<>();
     protected List<TaskProperties> finalTasks = new ArrayList<>();
     protected List<RequirementProperties> requirements = new ArrayList<>();
@@ -52,6 +55,7 @@ class Job
 
         $this->tasks = new \ArrayObject();
         $this->finalTasks = new \ArrayObject();
+        $this->artifacts = new \ArrayObject();
     }
 
     /**
@@ -164,6 +168,13 @@ class Job
     public function withFinalTasks(TaskInterface ...$finalTasks): self
     {
         $this->tasks->exchangeArray($finalTasks);
+
+        return $this;
+    }
+
+    public function withArtifacts(Artifact ...$artifacts): self
+    {
+        $this->artifacts->exchangeArray($artifacts);
 
         return $this;
     }

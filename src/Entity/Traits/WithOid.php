@@ -24,4 +24,11 @@ trait WithOid
         return $this;
     }
 
+    /**
+     * @return BambooOid|null
+     */
+    public function getOid(): ?BambooOid
+    {
+        return $this->oid;
+    }
 }
