@@ -20,6 +20,7 @@ class AnyTaskSubscriber implements EventSubscriberInterface
         }
 
         $event->setType(AnyTask::class);
+        $event->stopPropagation();
     }
 
     public static function getSubscribedEvents()
