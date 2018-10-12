@@ -1,11 +1,12 @@
 <?php
 
-namespace Reinfi\BambooSpec\Entity\Task;
+namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
+use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Reinfi\BambooSpec\Entity\Types\MultiLine;
 
 /**
- * @package Reinfi\BambooSpec\Entity\Task
+ * @package Reinfi\BambooSpec\Entity\Task\Shell
  */
 class ScriptTask extends AbstractTask
 {
