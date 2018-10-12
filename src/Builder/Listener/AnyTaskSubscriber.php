@@ -4,43 +4,22 @@ namespace Reinfi\BambooSpec\Builder\Listener;
 
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\PreSerializeEvent;
-use Reinfi\BambooSpec\Builder\Interfaces\TypedInterface;
 use Reinfi\BambooSpec\Entity\Task\AnyTask;
 
 /**
  * @package Reinfi\BambooSpec\Builder\Listener
  */
-class TypedInterfaceSubscriber implements EventSubscriberInterface
+class AnyTaskSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var \SplObjectStorage
-     */
-    private $mappedObjects;
-
-    /**
-     */
-    public function __construct()
-    {
-        $this->mappedObjects = new \SplObjectStorage();
-    }
-
     public function onPreSerialize(PreSerializeEvent $event)
     {
         $object = $event->getObject();
 
-        if (!$object instanceof TypedInterface) {
+        if (!$object instanceof AnyTask) {
             return;
         }
 
-        if ($this->mappedObjects->contains($object)) {
-            return;
-        }
-
-        $this->mappedObjects->attach($object);
-
-        $event->setType(TypedInterface::class);
-
-        $event->stopPropagation();
+        $event->setType(AnyTask::class);
     }
 
     public static function getSubscribedEvents()

@@ -12,6 +12,7 @@ use Reinfi\BambooSpec\Builder\Handler\ArrayObjectHandler;
 use Reinfi\BambooSpec\Builder\Handler\DurationHandler;
 use Reinfi\BambooSpec\Builder\Handler\MultiLineHandler;
 use Reinfi\BambooSpec\Builder\Handler\TypedInterfaceHandler;
+use Reinfi\BambooSpec\Builder\Listener\AnyTaskSubscriber;
 use Reinfi\BambooSpec\Builder\Listener\TypedInterfaceSubscriber;
 
 /**
@@ -64,6 +65,7 @@ class SerializerFactory
         $serializerBuilder->configureListeners(
             function (EventDispatcherInterface $dispatcher) {
                 $dispatcher->addSubscriber(new TypedInterfaceSubscriber());
+                $dispatcher->addSubscriber(new AnyTaskSubscriber());
             }
         );
     }
