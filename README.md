@@ -2,7 +2,6 @@
 
 #### Todo: ####
 
-- use Symfony Validator for entities
 - finish plan configuration possibilities
 - add more tasks
 - decide on a collection class (actually ArrayObject)
