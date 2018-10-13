@@ -21,7 +21,11 @@ class Stage
     /** @var bool */
     protected $finalStage = false;
 
-    /** @var iterable */
+    /**
+     * @Assert\Collection()
+     *
+     * @var \ArrayObject
+     */
     protected $jobs;
 
     /**
@@ -30,6 +34,8 @@ class Stage
     public function __construct(string $name)
     {
         $this->name = $name;
+
+        $this->jobs = new \ArrayObject();
     }
 
     /**
@@ -119,7 +125,7 @@ class Stage
      */
     public function withJobs(Job ...$jobs): self
     {
-        $this->jobs = $jobs;
+        $this->jobs->exchangeArray($jobs);
 
         return $this;
     }

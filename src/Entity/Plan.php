@@ -28,11 +28,13 @@ class Plan implements PublishableEntityInterface
     /** @var Project */
     protected $project;
 
-    /** @var iterable */
+    /**
+     * @var \ArrayObject
+     */
     protected $stages;
 
     /**
-     * @var RepositoryInterface[]|\ArrayObject
+     * @var \ArrayObject
      */
     protected $repositories;
 
@@ -65,6 +67,7 @@ class Plan implements PublishableEntityInterface
         $this->name = $name;
         $this->project = $project;
 
+        $this->stages = new \ArrayObject();
         $this->repositories = new \ArrayObject();
     }
 
@@ -150,7 +153,7 @@ class Plan implements PublishableEntityInterface
 
     public function withStages(Stage ...$stages): self
     {
-        $this->stages = $stages;
+        $this->stages->exchangeArray($stages);
 
         return $this;
     }
