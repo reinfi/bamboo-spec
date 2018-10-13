@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Repository;
 
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Repository
@@ -13,13 +14,22 @@ abstract class AbstractRepository implements RepositoryInterface
 {
     use WithOid;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $parent;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $description;
 
     /*
@@ -39,21 +49,9 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return AbstractRepository
      */
-    public function setParent($parent)
+    public function setParent(string $parent): self
     {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return AbstractRepository
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
 
         return $this;
     }
@@ -63,7 +61,7 @@ abstract class AbstractRepository implements RepositoryInterface
      *
      * @return AbstractRepository
      */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

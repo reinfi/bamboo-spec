@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Authentication\Git;
 
 use Reinfi\BambooSpec\Entity\Authentication\AuthenticationInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Authentication\Git
@@ -12,11 +13,17 @@ use Reinfi\BambooSpec\Entity\Authentication\AuthenticationInterface;
 class UsernamePasswordAuthentication implements AuthenticationInterface
 {
     /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
      * @var string
      */
     private $username;
 
     /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
      * @var string
      */
     private $password;

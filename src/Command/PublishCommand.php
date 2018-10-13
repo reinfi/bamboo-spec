@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Command;
 
+use Psr\Log\LoggerInterface;
 use Reinfi\BambooSpec\Client\ClientFactory;
 use Reinfi\BambooSpec\Config\Config;
 use Reinfi\BambooSpec\Config\ConfigParser;
 use Reinfi\BambooSpec\Credentials\CredentialsParser;
 use Reinfi\BambooSpec\Entry\EntryPointInterface;
+use Reinfi\BambooSpec\Exception\ValidationException;
 use Reinfi\BambooSpec\Server\BambooServer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -70,8 +72,10 @@ class PublishCommand extends Command
 
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
+    protected function execute(
+        InputInterface $input,
+        OutputInterface $output
+    ): int {
         $config = $this->configParser->parse($input->getOption('config'));
         $credentials = $this->credentialsParser->parse($config, $input);
         $client = $this->clientFactory->getClient($config, $credentials);
@@ -81,7 +85,13 @@ class PublishCommand extends Command
 
         $entry = $this->getEntryClass($config);
 
-        $entry->configure($server);
+        try {
+            $entry->configure($server);
+        } catch (ValidationException $exception) {
+            $this->printValidationErrors($logger, $exception);
+
+            return 1;
+        }
 
         return 0;
     }
@@ -91,5 +101,16 @@ class PublishCommand extends Command
         $entryClass = $config->getEntry();
 
         return new $entryClass;
+    }
+
+    protected function printValidationErrors(
+        LoggerInterface $logger,
+        ValidationException $exception
+    ): void {
+        $logger->error('There are validation errors in your configuration:');
+
+        foreach ($exception->getErrors() as $error) {
+            $logger->error($error);
+        }
     }
 }

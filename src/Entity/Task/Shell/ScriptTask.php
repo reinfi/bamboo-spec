@@ -6,6 +6,7 @@ namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Reinfi\BambooSpec\Entity\Types\MultiLine;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
@@ -19,25 +20,45 @@ class ScriptTask extends AbstractTask
     public const LOCATION_INLINE = 'INLINE';
     public const LOCATION_FILE = 'FILE';
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\Choice({"SHELL", "WINDOWS_POWER_SHELL", "BINSH_OR_CMDEXE"})
+     *
+     * @var string
+     */
     private $interpreter = self::INTERPRETER_SHELL;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\Choice({"INLINE", "FILE"})
+     *
+     * @var string
+     */
     private $location = self::LOCATION_INLINE;
 
-    /** @var MultiLine */
+    /**
+     * @var MultiLine
+     */
     private $body;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $path;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $argument;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $environmentVariables;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $workingSubdirectory;
 
     /**
@@ -48,18 +69,6 @@ class ScriptTask extends AbstractTask
     public function setInterpreter($interpreter)
     {
         $this->interpreter = $interpreter;
-
-        return $this;
-    }
-
-    /**
-     * @param string $location
-     *
-     * @return ScriptTask
-     */
-    public function setLocation($location)
-    {
-        $this->location = $location;
 
         return $this;
     }

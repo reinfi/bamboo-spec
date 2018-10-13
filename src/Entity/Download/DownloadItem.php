@@ -11,13 +11,19 @@ use Reinfi\BambooSpec\Entity\Artifact\Artifact;
  */
 class DownloadItem
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $allArtifacts = true;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $artifactName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $path = '';
 
     public static function fromName(string $artifactName): self

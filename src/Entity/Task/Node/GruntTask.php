@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task\Node;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Node
  */
@@ -11,13 +13,22 @@ class GruntTask extends AbstractNodeTask
 {
     private const GRUNT_EXECUTABLE_DEFAULT = 'node_modules/grunt-cli/bin/grunt';
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $gruntCliExecutable = self::GRUNT_EXECUTABLE_DEFAULT;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $task;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $gruntfile;
 
     /**

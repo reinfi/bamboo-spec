@@ -7,44 +7,71 @@ namespace Reinfi\BambooSpec\Entity\Repository;
 use JMS\Serializer\Annotation as Serializer;
 use Reinfi\BambooSpec\Entity\Authentication\AuthenticationInterface;
 use Reinfi\BambooSpec\Entity\Types\Duration;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Repository
  */
 class GitHubRepository extends AbstractRepository
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $repository;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $branch;
 
     /**
+     * @Assert\NotNull()
+     *
      * @Serializer\SerializedName("authenticationProperties")
      *
      * @var AuthenticationInterface
      */
     private $authentication;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $useShallowClones;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $useRemoteAgentCache = true;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $useSubmodules;
 
-    /** @var Duration */
+    /**
+     * @var Duration
+     */
     private $commandTimeout;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $verboseLogs;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $fetchWholeRepository;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $useLfs;
 
     public function __construct(
@@ -62,47 +89,11 @@ class GitHubRepository extends AbstractRepository
     }
 
     /**
-     * @param string $repository
-     *
-     * @return GitHubRepository
-     */
-    public function setRepository($repository)
-    {
-        $this->repository = $repository;
-
-        return $this;
-    }
-
-    /**
-     * @param string $branch
-     *
-     * @return GitHubRepository
-     */
-    public function setBranch($branch)
-    {
-        $this->branch = $branch;
-
-        return $this;
-    }
-
-    /**
-     * @param AuthenticationInterface $authentication
-     *
-     * @return GitHubRepository
-     */
-    public function setAuthentication(AuthenticationInterface $authentication)
-    {
-        $this->authentication = $authentication;
-
-        return $this;
-    }
-
-    /**
      * @param bool $useShallowClones
      *
      * @return GitHubRepository
      */
-    public function setUseShallowClones($useShallowClones)
+    public function setUseShallowClones(bool $useShallowClones): self
     {
         $this->useShallowClones = $useShallowClones;
 
@@ -114,7 +105,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setUseRemoteAgentCache($useRemoteAgentCache)
+    public function setUseRemoteAgentCache(bool $useRemoteAgentCache): self
     {
         $this->useRemoteAgentCache = $useRemoteAgentCache;
 
@@ -126,7 +117,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setUseSubmodules($useSubmodules)
+    public function setUseSubmodules(bool $useSubmodules): self
     {
         $this->useSubmodules = $useSubmodules;
 
@@ -138,7 +129,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setCommandTimeout(int $commandTimeoutInMinutes)
+    public function setCommandTimeout(int $commandTimeoutInMinutes): self
     {
         $this->commandTimeout = Duration::durationInMinutes($commandTimeoutInMinutes);
 
@@ -150,7 +141,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setVerboseLogs($verboseLogs)
+    public function setVerboseLogs(bool $verboseLogs): self
     {
         $this->verboseLogs = $verboseLogs;
 
@@ -162,7 +153,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setFetchWholeRepository($fetchWholeRepository)
+    public function setFetchWholeRepository(bool $fetchWholeRepository): self
     {
         $this->fetchWholeRepository = $fetchWholeRepository;
 
@@ -174,7 +165,7 @@ class GitHubRepository extends AbstractRepository
      *
      * @return GitHubRepository
      */
-    public function setUseLfs($useLfs)
+    public function setUseLfs(bool $useLfs): self
     {
         $this->useLfs = $useLfs;
 

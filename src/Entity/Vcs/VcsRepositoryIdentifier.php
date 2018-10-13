@@ -14,7 +14,9 @@ class VcsRepositoryIdentifier
 {
     use WithOid;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $name;
 
     /**

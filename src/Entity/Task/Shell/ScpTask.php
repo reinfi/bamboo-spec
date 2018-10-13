@@ -5,22 +5,34 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Artifact\ArtifactItem;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
  */
 class ScpTask extends AbstractSshTask
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $localPathAntStyle = false;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $localPath;
 
-    /** @var ArtifactItem */
+    /**
+     * @var ArtifactItem
+     */
     private $artifactItem;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $remotePath;
 
     /**

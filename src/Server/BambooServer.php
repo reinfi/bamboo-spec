@@ -12,6 +12,9 @@ use Psr\Log\NullLogger;
 use Reinfi\BambooSpec\Builder\SpecBuilder;
 use Reinfi\BambooSpec\Entity\Plan;
 use Reinfi\BambooSpec\Entity\PublishableEntityInterface;
+use Reinfi\BambooSpec\Exception\ValidationException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 /**
  * @package Reinfi\BambooSpec\Server
@@ -33,18 +36,27 @@ class BambooServer implements ServerInterface
      */
     private $logger;
 
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
     public function __construct(
         ClientInterface $client,
         LoggerInterface $logger = null,
-        SpecBuilder $specBuilder = null
+        SpecBuilder $specBuilder = null,
+        ValidatorInterface $validator = null
     ) {
         $this->client = $client;
         $this->logger = $logger ?: new NullLogger();
         $this->specBuilder = $specBuilder ?: new SpecBuilder();
+        $this->validator = $validator ?: (new ValidatorBuilder())->enableAnnotationMapping()->getValidator();
     }
 
     public function publish(PublishableEntityInterface $entity): void
     {
+        $this->validate($entity);
+
         $specData = $this->specBuilder->build($entity);
 
         $this->logger->info(
@@ -78,6 +90,17 @@ class BambooServer implements ServerInterface
 
             throw $exception;
         }
+    }
+
+    private function validate(PublishableEntityInterface $entity): void
+    {
+        $validationErrors = $this->validator->validate($entity);
+
+        if (count($validationErrors) === 0) {
+            return;
+        }
+
+        throw new ValidationException($validationErrors);
     }
 
     private function getApiUrl(PublishableEntityInterface $entity): string

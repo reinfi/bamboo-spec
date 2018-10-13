@@ -6,16 +6,23 @@ namespace Reinfi\BambooSpec\Entity\Task;
 
 use Reinfi\BambooSpec\Entity\Download\DownloadItem;
 use Reinfi\BambooSpec\Entity\Identifier\Plan\PlanIdentifier;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task
  */
 class ArtifactDownloaderTask extends AbstractTask
 {
-    /** @var PlanIdentifier */
+    /**
+     * @var PlanIdentifier
+     */
     private $sourcePlan;
 
-    /** @var \ArrayObject */
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
     private $artifacts;
 
     /**

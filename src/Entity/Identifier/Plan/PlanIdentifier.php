@@ -14,7 +14,9 @@ use Reinfi\BambooSpec\Entity\Project;
  */
 class PlanIdentifier extends AbstractPlanIdentifier
 {
-    /** @var BambooKey */
+    /**
+     * @var BambooKey
+     */
     private $projectKey;
 
     /**

@@ -6,16 +6,23 @@ namespace Reinfi\BambooSpec\Entity\Task;
 
 use Reinfi\BambooSpec\Entity\Vcs\CheckOutItem;
 use Reinfi\BambooSpec\Entity\Vcs\VcsRepositoryIdentifier;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task
  */
 class VcsCheckOutTask extends AbstractTask
 {
-    /** @var \ArrayObject */
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
     private $checkoutItems;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $cleanCheckout;
 
     public function __construct()

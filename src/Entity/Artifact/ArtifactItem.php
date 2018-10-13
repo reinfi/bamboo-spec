@@ -11,13 +11,19 @@ use Reinfi\BambooSpec\Entity\Identifier\Plan\PlanIdentifier;
  */
 class ArtifactItem
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $allArtifacts = true;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $artifactName;
 
-    /** @var PlanIdentifier */
+    /**
+     * @var PlanIdentifier
+     */
     private $sourcePlan;
 
     public static function fromName(string $artifactName): self

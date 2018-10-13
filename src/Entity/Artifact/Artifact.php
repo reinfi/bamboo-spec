@@ -4,24 +4,42 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Artifact;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @package Reinfi\BambooSpec\Entity\Artifact
  */
 class Artifact
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $copyPattern;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $location = "";
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $shared = false;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $required = false;
 
     /**

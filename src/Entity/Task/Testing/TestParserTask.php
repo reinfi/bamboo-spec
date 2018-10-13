@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Testing;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Testing
@@ -16,13 +17,27 @@ class TestParserTask extends AbstractTask
     private const TEST_TYPE_NUNIT = 'NUNIT';
     private const TEST_TYPE_MOCHA = 'MOCHA';
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Choice({"JUNIT", "TESTING", "NUNIT", "MOCHA"})
+     *
+     * @var string
+     */
     private $testType;
 
-    /** @var \ArrayObject */
+    /**
+     * @Assert\All({
+     *     @Assert\NotBlank
+     * })
+     *
+     * @var \ArrayObject
+     */
     private $resultDirectories;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $pickUpTestResultsCreatedOutsideOfThisBuild;
 
     /**

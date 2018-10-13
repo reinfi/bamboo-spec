@@ -9,20 +9,32 @@ namespace Reinfi\BambooSpec\Entity\Task;
  */
 abstract class AbstractTask implements TaskInterface
 {
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $enabled = true;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $description = "";
 
     /**
-     * @param bool $enabled
-     *
      * @return AbstractTask
      */
-    public function setEnabled($enabled)
+    public function enable(): self
     {
-        $this->enabled = $enabled;
+        $this->enabled = true;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractTask
+     */
+    public function disable(): self
+    {
+        $this->enabled = false;
 
         return $this;
     }
@@ -32,7 +44,7 @@ abstract class AbstractTask implements TaskInterface
      *
      * @return AbstractTask
      */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 

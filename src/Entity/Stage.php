@@ -4,25 +4,38 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @package Reinfi\BambooSpec\Entity
  */
 class Stage
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $description;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $manualStage = false;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $finalStage = false;
 
     /**
-     * @Assert\Collection()
+     * @Assert\Valid()
      *
      * @var \ArrayObject
      */

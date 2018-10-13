@@ -5,16 +5,24 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Types\Duration;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
  */
 class SshTask extends AbstractSshTask
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $command;
 
-    /** @var Duration */
+    /**
+     * @var Duration
+     */
     private $keepAliveInterval;
 
     /**

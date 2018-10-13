@@ -6,34 +6,62 @@ namespace Reinfi\BambooSpec\Entity;
 
 use Reinfi\BambooSpec\Entity\Artifact\Artifact;
 use Reinfi\BambooSpec\Entity\Task\TaskInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity
  */
 class Job
 {
-    /** @var BambooKey */
+    /**
+     * @Assert\NotNull()
+     *
+     * @var BambooKey
+     */
     protected $key;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $description = "";
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $enabled = true;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $cleanWorkingDirectory = false;
 
-    /** @var \ArrayObject */
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
     protected $tasks;
 
-    /** @var \ArrayObject */
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
     protected $finalTasks;
 
-    /** @var \ArrayObject */
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
     protected $artifacts;
 
     /*

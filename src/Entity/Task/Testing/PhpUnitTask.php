@@ -5,37 +5,62 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Testing;
 
 use Reinfi\BambooSpec\Entity\Task\AnyTask;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Testing
  */
 class PhpUnitTask extends AnyTask
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $label;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     private $arguments;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $environmentVariables;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $workingSubDirectory;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $logXmlEnabled;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $logXmlFile;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $coverageHtmlEnabled;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $coverageHtmlDirectory;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $pickupOutdatedFiles;
 
     /**
@@ -105,7 +130,7 @@ class PhpUnitTask extends AnyTask
      *
      * @return self
      */
-    public function setPickupOutdatedFiles($pickupOutdatedFiles): self
+    public function setPickupOutdatedFiles(bool $pickupOutdatedFiles): self
     {
         $this->pickupOutdatedFiles = $pickupOutdatedFiles;
 

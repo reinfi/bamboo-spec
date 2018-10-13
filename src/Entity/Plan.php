@@ -6,6 +6,7 @@ namespace Reinfi\BambooSpec\Entity;
 
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity
@@ -16,24 +17,43 @@ class Plan implements PublishableEntityInterface
 
     protected const JAVA_CLASS_NAME = 'com.atlassian.bamboo.specs.api.model.plan.PlanProperties';
 
-    /** @var BambooKey */
+    /**
+     * @Assert\NotNull()
+     *
+     * @var BambooKey
+     */
     protected $key;
 
-    /** @var string */
+    /**
+     * @Assert\NotBlank()
+     * @Assert\NotNull()
+     *
+     * @var string
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $description = "";
 
-    /** @var Project */
+    /**
+     * @Assert\NotNull()
+     *
+     * @var Project
+     */
     protected $project;
 
     /**
+     * @Assert\Valid()
+     *
      * @var \ArrayObject
      */
     protected $stages;
 
     /**
+     * @Assert\Valid()
+     *
      * @var \ArrayObject
      */
     protected $repositories;
@@ -43,7 +63,9 @@ class Plan implements PublishableEntityInterface
     protected List<VariableProperties> variables = new ArrayList<>();
     */
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $enabled = true;
 
     /*
@@ -53,7 +75,9 @@ class Plan implements PublishableEntityInterface
     protected List<NotificationProperties> notifications = new ArrayList<>();
     */
 
-    /** @var null|bool */
+    /**
+     * @var null|bool
+     */
     protected $forceStopHungBuilds = null;
 
     /**
@@ -151,6 +175,11 @@ class Plan implements PublishableEntityInterface
         return $this;
     }
 
+    /**
+     * @param Stage ...$stages
+     *
+     * @return Plan
+     */
     public function withStages(Stage ...$stages): self
     {
         $this->stages->exchangeArray($stages);
@@ -158,6 +187,11 @@ class Plan implements PublishableEntityInterface
         return $this;
     }
 
+    /**
+     * @param RepositoryInterface ...$repositories
+     *
+     * @return Plan
+     */
     public function withRepository(RepositoryInterface ...$repositories): self
     {
         $this->repositories->exchangeArray($repositories);

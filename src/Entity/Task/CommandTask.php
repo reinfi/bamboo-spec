@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task
@@ -13,17 +14,26 @@ class CommandTask extends AbstractTask
      * Sets label (not a path) of command to be executed. This label must be first
      * defined in the GUI on the Administration/Executables page.
      *
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
      * @var string
      */
     private $executable;
 
-    /** @var string|null */
+    /**
+     * @var string
+     */
     private $argument;
 
-    /** @var string|null */
+    /**
+     * @var string
+     */
     private $environmentVariables;
 
-    /** @var string|null */
+    /**
+     * @var string
+     */
     private $workingSubdirectory;
 
     /**

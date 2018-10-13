@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
@@ -17,28 +18,54 @@ abstract class AbstractSshTask extends AbstractTask
     protected const AUTHENTICATION_KEY_WITHOUT_PASSPHRASE = 'KEY_WITHOUT_PASSPHRASE';
     protected const AUTHENTICATION_KEY_WITH_PASSPHRASE = 'KEY_WITH_PASSPHRASE';
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $host;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $username;
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     * @Assert\Choice({"PASSWORD", "KEY_WITHOUT_PASSPHRASE", "KEY_WITH_PASSPHRASE"})
+     *
+     * @var string
+     */
     protected $authenticationType;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $password;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $key;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $passphrase;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $hostFingerprint;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $port = AbstractSshTask::DEFAULT_PORT;
 
     /**

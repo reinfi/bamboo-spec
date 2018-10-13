@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task\Node;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Node
  */
@@ -11,13 +13,22 @@ class GulpTask extends AbstractNodeTask
 {
     private const GULP_EXECUTABLE_DEFAULT = 'node_modules/gulp/bin/gulp.js';
 
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $gulpExecutable = self::GULP_EXECUTABLE_DEFAULT;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $task;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $gulpfile;
 
     /**

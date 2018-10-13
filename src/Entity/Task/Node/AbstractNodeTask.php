@@ -5,19 +5,29 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Task\Node;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Node
  */
 abstract class AbstractNodeTask extends AbstractTask
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $nodeExecutable;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $environmentVariables;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $workingSubdirectory;
 
     /**
@@ -29,23 +39,11 @@ abstract class AbstractNodeTask extends AbstractTask
     }
 
     /**
-     * @param string $nodeExecutable
-     *
-     * @return AbstractNodeTask
-     */
-    public function setNodeExecutable($nodeExecutable)
-    {
-        $this->nodeExecutable = $nodeExecutable;
-
-        return $this;
-    }
-
-    /**
      * @param string $environmentVariables
      *
      * @return AbstractNodeTask
      */
-    public function setEnvironmentVariables($environmentVariables)
+    public function setEnvironmentVariables(string $environmentVariables): self
     {
         $this->environmentVariables = $environmentVariables;
 
@@ -57,7 +55,7 @@ abstract class AbstractNodeTask extends AbstractTask
      *
      * @return AbstractNodeTask
      */
-    public function setWorkingSubdirectory($workingSubdirectory)
+    public function setWorkingSubdirectory(string $workingSubdirectory): self
     {
         $this->workingSubdirectory = $workingSubdirectory;
 

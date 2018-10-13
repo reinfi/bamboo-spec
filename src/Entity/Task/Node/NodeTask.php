@@ -4,15 +4,24 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task\Node;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Node
  */
 class NodeTask extends AbstractNodeTask
 {
-    /** @var string */
+    /**
+     * @Assert\NotNull()
+     * @Assert\NotBlank()
+     *
+     * @var string
+     */
     protected $script;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $arguments;
 
     /**
