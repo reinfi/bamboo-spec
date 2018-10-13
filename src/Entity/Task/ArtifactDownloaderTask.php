@@ -37,6 +37,8 @@ class ArtifactDownloaderTask extends AbstractTask
      * If this property is not set, source plan is either the current plan (if the task is used in a job) or the plan
      * associated with the deployment project (if the task is used in a deployment environment).
      *
+     * @Assert\Valid()
+     *
      * @param PlanIdentifier $sourcePlan
      *
      * @return ArtifactDownloaderTask

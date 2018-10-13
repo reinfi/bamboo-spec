@@ -8,6 +8,8 @@ use Reinfi\BambooSpec\Entity\BambooKey;
 use Reinfi\BambooSpec\Entity\BambooOid;
 use Reinfi\BambooSpec\Entity\Plan;
 use Reinfi\BambooSpec\Entity\Project;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Identifier\Plan
@@ -61,5 +63,19 @@ class PlanIdentifier extends AbstractPlanIdentifier
             null,
             $oid
         );
+    }
+
+    /**
+     * @Assert\Callback()
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        if ($this->oid === null && $this->projectKey === null && $this->key === null) {
+            $context
+                ->buildViolation('Either full key and project key or oid need to be defined when referencing plan')
+                ->addViolation();
+        }
     }
 }

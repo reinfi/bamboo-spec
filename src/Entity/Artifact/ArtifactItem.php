@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity\Artifact;
 
 use Reinfi\BambooSpec\Entity\Identifier\Plan\PlanIdentifier;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Artifact
@@ -22,6 +23,8 @@ class ArtifactItem
     private $artifactName;
 
     /**
+     * @Assert\Valid()
+     *
      * @var PlanIdentifier
      */
     private $sourcePlan;

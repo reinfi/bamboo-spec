@@ -7,6 +7,7 @@ namespace Reinfi\BambooSpec\Entity\Task\Shell;
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Reinfi\BambooSpec\Entity\Types\MultiLine;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
@@ -37,6 +38,8 @@ class ScriptTask extends AbstractTask
     private $location = self::LOCATION_INLINE;
 
     /**
+     * @Assert\Valid()
+     *
      * @var MultiLine
      */
     private $body;
@@ -167,5 +170,24 @@ class ScriptTask extends AbstractTask
     public function getJavaClass(): string
     {
         return 'com.atlassian.bamboo.specs.model.task.ScriptTaskProperties';
+    }
+
+    /**
+     * @Assert\Callback()
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        switch ($this->location) {
+            case self::LOCATION_FILE:
+                if (empty($this->path)) {
+                    $context
+                        ->buildViolation('Path must not be empty')
+                        ->atPath('path')
+                        ->addViolation();
+                }
+                break;
+        }
     }
 }

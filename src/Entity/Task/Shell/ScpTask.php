@@ -23,6 +23,8 @@ class ScpTask extends AbstractSshTask
     private $localPath;
 
     /**
+     * @Assert\Valid()
+     *
      * @var ArtifactItem
      */
     private $artifactItem;

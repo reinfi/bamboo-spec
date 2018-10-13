@@ -6,6 +6,7 @@ namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @package Reinfi\BambooSpec\Entity\Task\Shell
@@ -64,6 +65,8 @@ abstract class AbstractSshTask extends AbstractTask
     protected $hostFingerprint;
 
     /**
+     * @Assert\GreaterThanOrEqual(0)
+     *
      * @var int
      */
     protected $port = AbstractSshTask::DEFAULT_PORT;
@@ -113,7 +116,7 @@ abstract class AbstractSshTask extends AbstractTask
      *
      * @return self
      */
-    public function authenticateWithKeyWithPassphrase(
+    public function authenticateWithKeyAndPassphrase(
         string $key,
         string $passphrase
     ): self {
@@ -161,5 +164,42 @@ abstract class AbstractSshTask extends AbstractTask
         $this->port = $port;
 
         return $this;
+    }
+
+    /**
+     * @Assert\Callback()
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validate(ExecutionContextInterface $context)
+    {
+        switch ($this->authenticationType) {
+            case self::AUTHENTICATION_PASSWORD:
+                if (empty($this->password)) {
+                    $context
+                        ->buildViolation('For password authentication the password must not be empty')
+                        ->addViolation();
+                }
+                break;
+            case self::AUTHENTICATION_KEY_WITHOUT_PASSPHRASE:
+                if (empty($this->key)) {
+                    $context
+                        ->buildViolation('For key authentication the key must not be empty')
+                        ->addViolation();
+                }
+                break;
+            case self::AUTHENTICATION_KEY_WITH_PASSPHRASE:
+                if (empty($this->key)) {
+                    $context
+                        ->buildViolation('For key authentication the key must not be empty')
+                        ->addViolation();
+                }
+                if (empty($this->passphrase)) {
+                    $context
+                        ->buildViolation('For key authentication with passphrase the passphrase must not be empty')
+                        ->addViolation();
+                }
+                break;
+        }
     }
 }
