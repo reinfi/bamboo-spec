@@ -30,10 +30,6 @@ class TypedInterfaceSubscriber implements EventSubscriberInterface
     {
         $object = $event->getObject();
 
-        /** @var SerializationContext $context */
-        $context = $event->getContext();
-        $isVisiting = $context->isVisiting($object);
-
         if (!$object instanceof TypedInterface) {
             return;
         }
