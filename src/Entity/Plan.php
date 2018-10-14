@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use JMS\Serializer\Annotation as Serializer;
 use PhpCollection\Sequence;
 use PhpCollection\SequenceInterface;
+use Reinfi\BambooSpec\Entity\Plan\Dependencies;
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
 use Reinfi\BambooSpec\Entity\Types\Variable;
@@ -79,7 +81,17 @@ class Plan implements PublishableEntityInterface
 
     /*
     protected PlanBranchManagementProperties planBranchManagement;
-    protected DependenciesProperties dependencies;
+    */
+
+    /**
+     * @Assert\Valid()
+     * @Serializer\SerializedName("dependenciesProperties")
+     *
+     * @var Dependencies
+     */
+    protected $dependencies;
+
+    /*
     protected Map<String, PluginConfigurationProperties> pluginConfigurations = new LinkedHashMap<>()
     protected List<NotificationProperties> notifications = new ArrayList<>();
     */
@@ -181,6 +193,18 @@ class Plan implements PublishableEntityInterface
     public function setProject(Project $project)
     {
         $this->project = $project;
+
+        return $this;
+    }
+
+    /**
+     * @param Dependencies $dependencies
+     *
+     * @return self
+     */
+    public function setDependencies(Dependencies $dependencies): self
+    {
+        $this->dependencies = $dependencies;
 
         return $this;
     }
