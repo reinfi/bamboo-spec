@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity;
 
 use Reinfi\BambooSpec\Entity\Artifact\Artifact;
+use Reinfi\BambooSpec\Entity\Requirement\Requirement;
 use Reinfi\BambooSpec\Entity\Task\TaskInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -64,8 +65,14 @@ class Job
      */
     protected $artifacts;
 
+    /**
+     * @Assert\Valid()
+     *
+     * @var \ArrayObject
+     */
+    protected $requirements;
+
     /*
-    protected List<RequirementProperties> requirements = new ArrayList<>();
     protected List<ArtifactSubscriptionProperties> subscriptions = new ArrayList<>();
     protected Map<String, PluginConfigurationProperties> pluginConfigurations = new LinkedHashMap<>();
 
@@ -84,6 +91,7 @@ class Job
         $this->tasks = new \ArrayObject();
         $this->finalTasks = new \ArrayObject();
         $this->artifacts = new \ArrayObject();
+        $this->requirements = new \ArrayObject();
     }
 
     /**
@@ -203,6 +211,13 @@ class Job
     public function withArtifacts(Artifact ...$artifacts): self
     {
         $this->artifacts->exchangeArray($artifacts);
+
+        return $this;
+    }
+
+    public function withRequirements(Requirement ...$requirements): self
+    {
+        $this->requirements->exchangeArray($requirements);
 
         return $this;
     }
