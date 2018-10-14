@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task\Shell;
 
+use JMS\Serializer\Annotation as Serializer;
+use Reinfi\BambooSpec\Entity\Identifier\Credentials\SharedCredentialsIdentifier;
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -28,9 +30,6 @@ abstract class AbstractSshTask extends AbstractTask
     protected $host;
 
     /**
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     *
      * @var string
      */
     protected $username;
@@ -60,6 +59,15 @@ abstract class AbstractSshTask extends AbstractTask
     protected $passphrase;
 
     /**
+     * @Assert\Valid()
+     *
+     * @Serializer\SerializedName("sharedCredentialsIdentifierProperties")
+     *
+     * @var SharedCredentialsIdentifier
+     */
+    protected $sharedCredentials;
+
+    /**
      * @var string
      */
     protected $hostFingerprint;
@@ -81,27 +89,15 @@ abstract class AbstractSshTask extends AbstractTask
 
     /**
      * @param string $username
-     *
-     * @return self
-     */
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /*
-    protected SharedCredentialsIdentifierProperties sharedCredentials;
-    */
-
-    /**
      * @param string $password
      *
      * @return self
      */
-    public function authenticateWithPassword(string $password): self
-    {
+    public function authenticateWithPassword(
+        string $username,
+        string $password
+    ): self {
+        $this->username = $username;
         $this->password = $password;
         $this->authenticationType = self::AUTHENTICATION_PASSWORD;
 
@@ -117,10 +113,12 @@ abstract class AbstractSshTask extends AbstractTask
      * @return self
      */
     public function authenticateWithKeyAndPassphrase(
+        string $username,
         string $key,
         string $passphrase
     ): self {
         $this->authenticationType = self::AUTHENTICATION_KEY_WITH_PASSPHRASE;
+        $this->username = $username;
         $this->key = $key;
         $this->passphrase = $passphrase;
 
@@ -130,14 +128,46 @@ abstract class AbstractSshTask extends AbstractTask
     /**
      * Authenticate with key (without passphrase).
      *
-     * @param $key - SSH private key
+     * @param string $username
+     * @param string $key - SSH private key
      *
      * @return self
      */
-    public function authenticateWithKey(string $key): self
-    {
+    public function authenticateWithKey(
+        string $username,
+        string $key
+    ): self {
         $this->authenticationType = self::AUTHENTICATION_KEY_WITHOUT_PASSPHRASE;
+        $this->username = $username;
         $this->key = $key;
+
+        return $this;
+    }
+
+    /**
+     * @param SharedCredentialsIdentifier $sharedCredentialsIdentifier
+     *
+     * @return AbstractSshTask
+     */
+    public function authenticateWithSshSharedCredentials(
+        SharedCredentialsIdentifier $sharedCredentialsIdentifier
+    ): self {
+        $this->authenticationType = self::AUTHENTICATION_KEY_WITH_PASSPHRASE;
+        $this->sharedCredentials = $sharedCredentialsIdentifier;
+
+        return $this;
+    }
+
+    /**
+     * @param SharedCredentialsIdentifier $sharedCredentialsIdentifier
+     *
+     * @return AbstractSshTask
+     */
+    public function authenticateWithUsernamePasswordSharedCredentials(
+        SharedCredentialsIdentifier $sharedCredentialsIdentifier
+    ): self {
+        $this->authenticationType = self::AUTHENTICATION_PASSWORD;
+        $this->sharedCredentials = $sharedCredentialsIdentifier;
 
         return $this;
     }
@@ -173,30 +203,53 @@ abstract class AbstractSshTask extends AbstractTask
      */
     public function validate(ExecutionContextInterface $context)
     {
+        if ($this->sharedCredentials instanceof SharedCredentialsIdentifier) {
+            return;
+        }
+
+        if (empty($this->username)) {
+            $context
+                ->buildViolation('Username must not be empty')
+                ->atPath('username')
+                ->addViolation();
+        }
+
         switch ($this->authenticationType) {
             case self::AUTHENTICATION_PASSWORD:
                 if (empty($this->password)) {
                     $context
-                        ->buildViolation('For password authentication the password must not be empty')
+                        ->buildViolation(
+                            'For password authentication the password must not be empty'
+                        )
+                        ->atPath('password')
                         ->addViolation();
                 }
                 break;
             case self::AUTHENTICATION_KEY_WITHOUT_PASSPHRASE:
                 if (empty($this->key)) {
                     $context
-                        ->buildViolation('For key authentication the key must not be empty')
+                        ->buildViolation(
+                            'For key authentication the key must not be empty'
+                        )
+                        ->atPath('key')
                         ->addViolation();
                 }
                 break;
             case self::AUTHENTICATION_KEY_WITH_PASSPHRASE:
                 if (empty($this->key)) {
                     $context
-                        ->buildViolation('For key authentication the key must not be empty')
+                        ->buildViolation(
+                            'For key authentication the key must not be empty'
+                        )
+                        ->atPath('key')
                         ->addViolation();
                 }
                 if (empty($this->passphrase)) {
                     $context
-                        ->buildViolation('For key authentication with passphrase the passphrase must not be empty')
+                        ->buildViolation(
+                            'For key authentication with passphrase the passphrase must not be empty'
+                        )
+                        ->atPath('passphrase')
                         ->addViolation();
                 }
                 break;
