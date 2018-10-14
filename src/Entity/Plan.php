@@ -8,6 +8,7 @@ use PhpCollection\Sequence;
 use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
+use Reinfi\BambooSpec\Entity\Types\Variable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -60,9 +61,15 @@ class Plan implements PublishableEntityInterface
      */
     protected $repositories;
 
+    /**
+     * @Assert\Valid()
+     *
+     * @var SequenceInterface
+     */
+    protected $variables;
+
     /*
     protected List<TriggerProperties> triggers = new ArrayList<>();
-    protected List<VariableProperties> variables = new ArrayList<>();
     */
 
     /**
@@ -95,6 +102,7 @@ class Plan implements PublishableEntityInterface
 
         $this->stages = new Sequence();
         $this->repositories = new Sequence();
+        $this->variables = new Sequence();
     }
 
     /**
@@ -197,6 +205,18 @@ class Plan implements PublishableEntityInterface
     public function withRepository(RepositoryInterface ...$repositories): self
     {
         $this->repositories->addAll($repositories);
+
+        return $this;
+    }
+
+    /**
+     * @param Variable ...$variables
+     *
+     * @return Plan
+     */
+    public function withVariables(Variable ...$variables): self
+    {
+        $this->variables->addAll($variables);
 
         return $this;
     }
