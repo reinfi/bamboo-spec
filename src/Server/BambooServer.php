@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Server;
 
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Psr\Log\LoggerInterface;
@@ -12,6 +13,7 @@ use Psr\Log\NullLogger;
 use Reinfi\BambooSpec\Builder\SpecBuilder;
 use Reinfi\BambooSpec\Entity\Plan;
 use Reinfi\BambooSpec\Entity\PublishableEntityInterface;
+use Reinfi\BambooSpec\Exception\FailedException;
 use Reinfi\BambooSpec\Exception\ValidationException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ValidatorBuilder;
@@ -83,6 +85,25 @@ class BambooServer implements ServerInterface
                     json_decode($response->getBody()->getContents())
                 )
             );
+        } catch (ClientException $exception) {
+            $jsonResponse = @json_decode($exception->getResponse()->getBody()->getContents(), true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw $exception;
+            }
+
+            $errors = $jsonResponse['errors'] ?? null;
+
+            if ($errors === null || !\is_array($errors)) {
+                throw $exception;
+            }
+
+            $this->logger->error('Following errors occured during update:');
+            foreach ($errors as $error) {
+                $this->logger->error($error);
+            }
+
+            throw new FailedException($exception->getMessage(), $exception->getCode(), $exception);
         } catch (RequestException $exception) {
             $this->logger->error(
                 $exception->getMessage()

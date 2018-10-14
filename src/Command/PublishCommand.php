@@ -10,6 +10,7 @@ use Reinfi\BambooSpec\Config\Config;
 use Reinfi\BambooSpec\Config\ConfigParser;
 use Reinfi\BambooSpec\Credentials\CredentialsParser;
 use Reinfi\BambooSpec\Entry\EntryPointInterface;
+use Reinfi\BambooSpec\Exception\FailedException;
 use Reinfi\BambooSpec\Exception\ValidationException;
 use Reinfi\BambooSpec\Server\BambooServer;
 use Symfony\Component\Console\Command\Command;
@@ -90,6 +91,8 @@ class PublishCommand extends Command
         } catch (ValidationException $exception) {
             $this->printValidationErrors($logger, $exception);
 
+            return 1;
+        } catch (FailedException $exception) {
             return 1;
         }
 
