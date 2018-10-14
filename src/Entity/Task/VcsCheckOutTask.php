@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Vcs\CheckOutItem;
 use Reinfi\BambooSpec\Entity\Vcs\VcsRepositoryIdentifier;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,7 +18,7 @@ class VcsCheckOutTask extends AbstractTask
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     private $checkoutItems;
 
@@ -27,7 +29,7 @@ class VcsCheckOutTask extends AbstractTask
 
     public function __construct()
     {
-        $this->checkoutItems = new \ArrayObject();
+        $this->checkoutItems = new Sequence();
     }
 
     /**
@@ -41,7 +43,7 @@ class VcsCheckOutTask extends AbstractTask
      */
     public function addCheckoutOfDefaultRepository(): self
     {
-        $this->checkoutItems->append(
+        $this->checkoutItems->add(
             (new CheckOutItem())->useDefaultRepository()
         );
 
@@ -60,7 +62,7 @@ class VcsCheckOutTask extends AbstractTask
      */
     public function addCheckoutOfRepository(VcsRepositoryIdentifier $repository): self
     {
-        $this->checkoutItems->append(
+        $this->checkoutItems->add(
             (new CheckOutItem())->setRepository($repository)
         );
 
@@ -76,7 +78,7 @@ class VcsCheckOutTask extends AbstractTask
      */
     public function withCheckoutItems(CheckOutItem ...$checkoutItems): self
     {
-        $this->checkoutItems->exchangeArray($checkoutItems);
+        $this->checkoutItems->addAll($checkoutItems);
 
         return $this;
     }

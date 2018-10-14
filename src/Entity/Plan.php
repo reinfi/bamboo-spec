@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -47,14 +49,14 @@ class Plan implements PublishableEntityInterface
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $stages;
 
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $repositories;
 
@@ -91,8 +93,8 @@ class Plan implements PublishableEntityInterface
         $this->name = $name;
         $this->project = $project;
 
-        $this->stages = new \ArrayObject();
-        $this->repositories = new \ArrayObject();
+        $this->stages = new Sequence();
+        $this->repositories = new Sequence();
     }
 
     /**
@@ -182,7 +184,7 @@ class Plan implements PublishableEntityInterface
      */
     public function withStages(Stage ...$stages): self
     {
-        $this->stages->exchangeArray($stages);
+        $this->stages->addAll($stages);
 
         return $this;
     }
@@ -194,7 +196,7 @@ class Plan implements PublishableEntityInterface
      */
     public function withRepository(RepositoryInterface ...$repositories): self
     {
-        $this->repositories->exchangeArray($repositories);
+        $this->repositories->addAll($repositories);
 
         return $this;
     }

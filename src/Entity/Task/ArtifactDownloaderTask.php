@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Download\DownloadItem;
 use Reinfi\BambooSpec\Entity\Identifier\Plan\PlanIdentifier;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -21,7 +23,7 @@ class ArtifactDownloaderTask extends AbstractTask
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     private $artifacts;
 
@@ -29,7 +31,7 @@ class ArtifactDownloaderTask extends AbstractTask
      */
     public function __construct()
     {
-        $this->artifacts = new \ArrayObject();
+        $this->artifacts = new Sequence();
     }
 
     /**
@@ -59,7 +61,7 @@ class ArtifactDownloaderTask extends AbstractTask
      */
     public function withArtifacts(DownloadItem ...$artifacts): self
     {
-        $this->artifacts->exchangeArray($artifacts);
+        $this->artifacts->addAll($artifacts);
 
         return $this;
     }

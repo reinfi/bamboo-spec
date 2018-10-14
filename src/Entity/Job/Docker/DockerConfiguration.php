@@ -65,9 +65,6 @@ class DockerConfiguration
      * by following the Docker image format
      * (e.g. {@code localhost:5000/namespace/image:tag}).
      *
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     *
      * @param string $image
      *
      * @return self

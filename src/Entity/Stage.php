@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -37,7 +39,7 @@ class Stage
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $jobs;
 
@@ -48,7 +50,7 @@ class Stage
     {
         $this->name = $name;
 
-        $this->jobs = new \ArrayObject();
+        $this->jobs = new Sequence();
     }
 
     /**
@@ -138,7 +140,7 @@ class Stage
      */
     public function withJobs(Job ...$jobs): self
     {
-        $this->jobs->exchangeArray($jobs);
+        $this->jobs->addAll($jobs);
 
         return $this;
     }

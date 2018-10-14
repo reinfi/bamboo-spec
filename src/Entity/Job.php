@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Artifact\Artifact;
 use Reinfi\BambooSpec\Entity\Job\Docker\DockerConfiguration;
 use Reinfi\BambooSpec\Entity\Job\Requirement\Requirement;
@@ -48,28 +50,28 @@ class Job
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $tasks;
 
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $finalTasks;
 
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $artifacts;
 
     /**
      * @Assert\Valid()
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     protected $requirements;
 
@@ -89,10 +91,10 @@ class Job
         $this->key = $key;
         $this->name = $name;
 
-        $this->tasks = new \ArrayObject();
-        $this->finalTasks = new \ArrayObject();
-        $this->artifacts = new \ArrayObject();
-        $this->requirements = new \ArrayObject();
+        $this->tasks = new Sequence();
+        $this->finalTasks = new Sequence();
+        $this->artifacts = new Sequence();
+        $this->requirements = new Sequence();
     }
 
     /**
@@ -170,28 +172,28 @@ class Job
 
     public function withTasks(TaskInterface ...$tasks): self
     {
-        $this->tasks->exchangeArray($tasks);
+        $this->tasks->addAll($tasks);
 
         return $this;
     }
 
     public function withFinalTasks(TaskInterface ...$finalTasks): self
     {
-        $this->tasks->exchangeArray($finalTasks);
+        $this->tasks->addAll($finalTasks);
 
         return $this;
     }
 
     public function withArtifacts(Artifact ...$artifacts): self
     {
-        $this->artifacts->exchangeArray($artifacts);
+        $this->artifacts->addAll($artifacts);
 
         return $this;
     }
 
     public function withRequirements(Requirement ...$requirements): self
     {
-        $this->requirements->exchangeArray($requirements);
+        $this->requirements->addAll($requirements);
 
         return $this;
     }

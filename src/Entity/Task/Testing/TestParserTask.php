@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Reinfi\BambooSpec\Entity\Task\Testing;
 
+use PhpCollection\Sequence;
+use PhpCollection\SequenceInterface;
 use Reinfi\BambooSpec\Entity\Task\AbstractTask;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,7 +33,7 @@ class TestParserTask extends AbstractTask
      *     @Assert\NotBlank
      * })
      *
-     * @var \ArrayObject
+     * @var SequenceInterface
      */
     private $resultDirectories;
 
@@ -47,7 +49,7 @@ class TestParserTask extends AbstractTask
     {
         $this->testType = $testType;
 
-        $this->resultDirectories = new \ArrayObject();
+        $this->resultDirectories = new Sequence();
     }
 
     /**
@@ -92,7 +94,7 @@ class TestParserTask extends AbstractTask
      */
     public function addResultDirectory(string $resultDirectory): self
     {
-        $this->resultDirectories->append($resultDirectory);
+        $this->resultDirectories->add($resultDirectory);
 
         return $this;
     }
@@ -107,7 +109,7 @@ class TestParserTask extends AbstractTask
      */
     public function withResultDirectories(string ...$resultDirectories): self
     {
-        $this->resultDirectories->exchangeArray($resultDirectories);
+        $this->resultDirectories->addAll($resultDirectories);
 
         return $this;
     }
