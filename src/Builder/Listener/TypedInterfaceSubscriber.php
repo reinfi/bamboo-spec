@@ -6,6 +6,7 @@ namespace Reinfi\BambooSpec\Builder\Listener;
 
 use JMS\Serializer\EventDispatcher\EventSubscriberInterface;
 use JMS\Serializer\EventDispatcher\PreSerializeEvent;
+use JMS\Serializer\SerializationContext;
 use Reinfi\BambooSpec\Builder\Interfaces\TypedInterface;
 
 /**
@@ -29,11 +30,17 @@ class TypedInterfaceSubscriber implements EventSubscriberInterface
     {
         $object = $event->getObject();
 
+        /** @var SerializationContext $context */
+        $context = $event->getContext();
+        $isVisiting = $context->isVisiting($object);
+
         if (!$object instanceof TypedInterface) {
             return;
         }
 
         if ($this->mappedObjects->contains($object)) {
+            $this->mappedObjects->detach($object);
+
             return;
         }
 
