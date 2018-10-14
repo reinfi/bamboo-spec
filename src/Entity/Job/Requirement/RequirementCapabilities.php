@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Reinfi\BambooSpec\Entity\Requirement;
+namespace Reinfi\BambooSpec\Entity\Job\Requirement;
 
 /**
  * This list might not be correct and it might be missing values.
  *
- * @package Reinfi\BambooSpec\Entity\Requirement
+ * @package Reinfi\BambooSpec\Entity\Job\Requirement
  */
 abstract class RequirementCapabilities
 {

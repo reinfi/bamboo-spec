@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Reinfi\BambooSpec\Entity;
 
 use Reinfi\BambooSpec\Entity\Artifact\Artifact;
-use Reinfi\BambooSpec\Entity\Requirement\Requirement;
+use Reinfi\BambooSpec\Entity\Job\Docker\DockerConfiguration;
+use Reinfi\BambooSpec\Entity\Job\Requirement\Requirement;
 use Reinfi\BambooSpec\Entity\Task\TaskInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -72,12 +73,12 @@ class Job
      */
     protected $requirements;
 
-    /*
-    protected List<ArtifactSubscriptionProperties> subscriptions = new ArrayList<>();
-    protected Map<String, PluginConfigurationProperties> pluginConfigurations = new LinkedHashMap<>();
-
-    protected DockerConfigurationProperties dockerConfiguration;
-    */
+    /**
+     * @Assert\Valid()
+     *
+     * @var DockerConfiguration
+     */
+    protected $dockerConfiguration;
 
     /**
      * @param BambooKey $key
@@ -95,14 +96,6 @@ class Job
     }
 
     /**
-     * @return BambooKey
-     */
-    public function getKey(): BambooKey
-    {
-        return $this->key;
-    }
-
-    /**
      * @param BambooKey $key
      *
      * @return Job
@@ -112,14 +105,6 @@ class Job
         $this->key = $key;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
     }
 
     /**
@@ -135,14 +120,6 @@ class Job
     }
 
     /**
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
      * @param string $description
      *
      * @return Job
@@ -152,14 +129,6 @@ class Job
         $this->description = $description;
 
         return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isEnabled(): bool
-    {
-        return $this->enabled;
     }
 
     /**
@@ -175,11 +144,16 @@ class Job
     }
 
     /**
-     * @return bool
+     * @param DockerConfiguration $dockerConfiguration
+     *
+     * @return self
      */
-    public function isCleanWorkingDirectory(): bool
-    {
-        return $this->cleanWorkingDirectory;
+    public function setDockerConfiguration(
+        DockerConfiguration $dockerConfiguration
+    ): self {
+        $this->dockerConfiguration = $dockerConfiguration;
+
+        return $this;
     }
 
     /**

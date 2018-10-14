@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Reinfi\BambooSpec\Entity\Requirement;
+namespace Reinfi\BambooSpec\Entity\Job\Requirement;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @package Reinfi\BambooSpec\Entity\Requirement
+ * @package Reinfi\BambooSpec\Entity\Job\Requirement
  */
 class Requirement
 {
