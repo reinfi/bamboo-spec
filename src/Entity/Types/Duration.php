@@ -9,6 +9,8 @@ namespace Reinfi\BambooSpec\Entity\Types;
  */
 class Duration
 {
+    private const SECONDS_PER_DAY = 60 * 60 * 24;
+
     /**
      * @var int
      */
@@ -20,6 +22,24 @@ class Duration
     private function __construct(int $seconds)
     {
         $this->seconds = $seconds;
+    }
+
+    /**
+     * @return Duration
+     */
+    public static function durationZero(): Duration
+    {
+        return new Duration(0);
+    }
+
+    /**
+     * @param int $days
+     *
+     * @return Duration
+     */
+    public static function durationInDays(int $days): Duration
+    {
+        return new Duration($days * self::SECONDS_PER_DAY);
     }
 
     /**

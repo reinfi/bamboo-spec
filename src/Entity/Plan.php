@@ -7,6 +7,7 @@ namespace Reinfi\BambooSpec\Entity;
 use JMS\Serializer\Annotation as Serializer;
 use PhpCollection\Sequence;
 use PhpCollection\SequenceInterface;
+use Reinfi\BambooSpec\Entity\Plan\Branch\PlanBranchManagement;
 use Reinfi\BambooSpec\Entity\Plan\Dependencies;
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
 use Reinfi\BambooSpec\Entity\Traits\WithOid;
@@ -79,9 +80,13 @@ class Plan implements PublishableEntityInterface
      */
     protected $enabled = true;
 
-    /*
-    protected PlanBranchManagementProperties planBranchManagement;
-    */
+    /**
+     * @Assert\Valid()
+     * @Serializer\SerializedName("planBranchManagementProperties")
+     *
+     * @var PlanBranchManagement
+     */
+    protected $planBranchManagement;
 
     /**
      * @Assert\Valid()
@@ -205,6 +210,21 @@ class Plan implements PublishableEntityInterface
     public function setDependencies(Dependencies $dependencies): self
     {
         $this->dependencies = $dependencies;
+
+        return $this;
+    }
+
+    /**
+     * Specifies plan branch management options for this plan. These options control if and how Bamboo should perform automatic branch management.
+     *
+     * @param PlanBranchManagement $planBranchManagement
+     *
+     * @return self
+     */
+    public function setPlanBranchManagement(
+        PlanBranchManagement $planBranchManagement
+    ): self {
+        $this->planBranchManagement = $planBranchManagement;
 
         return $this;
     }

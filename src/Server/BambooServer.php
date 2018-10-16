@@ -92,6 +92,13 @@ class BambooServer implements ServerInterface
                 throw $exception;
             }
 
+            if (isset($jsonResponse['message'])) {
+                $this->logger->error('Following error occured during update:');
+                $this->logger->error($jsonResponse['message']);
+
+                throw new FailedException($jsonResponse['message'], $jsonResponse['status-code'] ?? 0, $exception);
+            }
+
             $errors = $jsonResponse['errors'] ?? null;
 
             if ($errors === null || !\is_array($errors)) {
