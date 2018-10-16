@@ -12,6 +12,7 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Reinfi\BambooSpec\Builder\Handler\DurationHandler;
 use Reinfi\BambooSpec\Builder\Handler\MultiLineHandler;
+use Reinfi\BambooSpec\Builder\Handler\NotificationApplicableToHandler;
 use Reinfi\BambooSpec\Builder\Handler\TypedInterfaceHandler;
 use Reinfi\BambooSpec\Builder\Listener\AnyTaskSubscriber;
 use Reinfi\BambooSpec\Builder\Listener\TypedInterfaceSubscriber;
@@ -52,6 +53,9 @@ class SerializerFactory
                 );
                 $handlerRegistry->registerSubscribingHandler(
                     new TypedInterfaceHandler()
+                );
+                $handlerRegistry->registerSubscribingHandler(
+                    new NotificationApplicableToHandler()
                 );
             }
         );

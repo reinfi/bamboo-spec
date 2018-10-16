@@ -7,6 +7,7 @@ namespace Reinfi\BambooSpec\Entity;
 use JMS\Serializer\Annotation as Serializer;
 use PhpCollection\Sequence;
 use PhpCollection\SequenceInterface;
+use Reinfi\BambooSpec\Entity\Notification\Notification;
 use Reinfi\BambooSpec\Entity\Plan\Branch\PlanBranchManagement;
 use Reinfi\BambooSpec\Entity\Plan\Dependencies;
 use Reinfi\BambooSpec\Entity\Repository\RepositoryInterface;
@@ -98,8 +99,14 @@ class Plan implements PublishableEntityInterface
 
     /*
     protected Map<String, PluginConfigurationProperties> pluginConfigurations = new LinkedHashMap<>()
-    protected List<NotificationProperties> notifications = new ArrayList<>();
     */
+
+    /**
+     * @Assert\Valid()
+     *
+     * @var SequenceInterface
+     */
+    protected $notifications;
 
     /**
      * @var null|bool
@@ -120,6 +127,7 @@ class Plan implements PublishableEntityInterface
         $this->stages = new Sequence();
         $this->repositories = new Sequence();
         $this->variables = new Sequence();
+        $this->notifications = new Sequence();
     }
 
     /**
@@ -261,6 +269,18 @@ class Plan implements PublishableEntityInterface
     public function withVariables(Variable ...$variables): self
     {
         $this->variables->addAll($variables);
+
+        return $this;
+    }
+
+    /**
+     * @param Notification ...$notifications
+     *
+     * @return Plan
+     */
+    public function withNotifications(Notification ...$notifications): self
+    {
+        $this->notifications->addAll($notifications);
 
         return $this;
     }
